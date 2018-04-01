@@ -1,45 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Giphy Clicky</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
+
 <body>
   <div class="container">
     <div class="row">
-    <button data-team='mavericks'>Dallas Mavericks</button>   
-<button data-team='chicago bulls'>Chicago Bulls</button> 
-<button data-team='houston rockets'>Houston Rockets</button> 
-<button data-team='new york knicks'>New York Knicks</button>
-<button data-team='houston rockets'>Houston Rockets</button>  
-<button data-team='la lakers'>LA Lakers</button>
-<button data-team='cleveland cavaliers'>Cleveland Cavaliers</button> 
-<button data-team='boston celtics'>Boston Celtics</button> 
-<button data-team='golden state warriors'>Golden State Warrios</button>
-<button data-team='oklahoma city thunder'>Oklahoma City Thunder</button>
-<button data-team='brooklyn nets'>Brooklyn Nets</button> 
-<div class="newButtonHere"></div>
+      <div class="newButton"></div>
 
-<br><br>
-<div class="row">
-      <h4 style="text-align: right; margin-right: 100px">ADD MORE GIF'S</h4>
-    <div class="input-group" style="width: 250px; float: right;">
-      
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
-      </span>
-      <input type="text" class="form-control" placeholder="Search for...">
-    </div><!-- /input-group -->
-  
-</div><!-- /.row -->
-</div>
+      <br>
+      <br>
+      <div class="row">
+        <h4 style="text-align: right; margin-right: 100px">ADD MORE GIF'S</h4>
+        <div class="input-group" style="width: 250px; float: right;">
 
-</div>
-<script src=""></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+          <span class="input-group-btn">
+            <button class="btn btn-default btnSubmit" type="submit">Go!</button>
+          </span>
+          <input type="text" class="form-control" placeholder="Search for..." id="userInput">
+        </div>
+        <!-- /input-group -->
+
+      </div>
+      <!-- /.row -->
+    </div>
+    <div class="row">
+      <div class="col-4-md images"></div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+
+      var topics = ['Dallas Mavericks', 'Chicago Bulls', 'Houston Rockets', 'New York Knicks', 'Houston Rockets', 'LA Lakers', "Cleveland Cavaliers", 'Boston Celtics', 'Golden State Warriors', 'Oklahoma City Thunder', 'Brooklyn Nets'];
+
+
+      for (i = 0; i < topics.length; i++) {
+        var arrayButton = $('.newButton')
+        var name = topics[i];
+        var arrayNewButton = $('<button>' + name + '</button>');
+        arrayNewButton.attr('data-team', name);
+        arrayNewButton.attr('class', 'myTeams');
+        arrayButton.append(arrayNewButton);
+      }
+
+
+      $(".myTeams").on("click", function () {
+        $(".images").empty();
+        btnClicked = $(this).attr("data-team");
+        console.log(btnClicked);
+        var queryURL =
+          "https://api.giphy.com/v1/gifs/search?q=" +
+          btnClicked +
+          "&api_key=p423lQ3Mc0K07s2qLaf7aymo9tTZbXNr&limit=10";
+
+        function gifImage() {
+          $.ajax({
+            url: queryURL,
+            method: "GET"
+          }).then(function (response) {
+            for (i = 0; i < response.data.length; i++) {
+
+              var gifs = $(".images");
+              var gifDisplay = $("<img>");
+              var ratingDisplay = $('<p>' + 'rating: ' + response.data[i].rating + '</p>');
+              gifDisplay.attr("src", response.data[i].images.fixed_height_still.url);
+              gifDisplay.attr("data-still", response.data[i].images.fixed_height_still.url);
+              gifDisplay.attr("data-animate", response.data[i].images.fixed_height.url);
+              gifDisplay.attr("data-state", 'still');
+              gifs.append(gifDisplay);
+              gifs.append(ratingDisplay);
+
+              gifDisplay.on('click', function () {
+                var state = $(this).attr("data-state");
+
+                if (state === "still") {
+                  $(this).attr("src", $(this).attr("data-animate"));
+                  $(this).attr("data-state", "animate");
+                } else {
+                  $(this).attr("src", $(this).attr("data-still"));
+                  $(this).attr("data-state", "still");
+                }
+              })
+
+
+            };
+
+          });
+
+        };
+
+
+        gifImage();
+      });
+
+    </script>
+  </div>
+
+  <script src="assets/javascript/app.js"></script>
 </body>
+
 </html>
