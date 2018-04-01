@@ -20,7 +20,8 @@
       <br>
       <br>
       <div class="row">
-        <h4 style="text-align: right; margin-right: 100px">ADD MORE GIF'S</h4>
+        <img src="assets/images/nba.png" alt="NBA" id="nbaLogo">
+        <h4 style="text-align: right; margin-right: 100px; color: white">ADD MORE GIF'S</h4>
         <div class="input-group" style="width: 250px; float: right;">
 
           <span class="input-group-btn">
@@ -34,7 +35,7 @@
       <!-- /.row -->
     </div>
     <div class="row">
-      <div class="col-4-md images"></div>
+      <div class="col-md-3 images"></div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
@@ -70,7 +71,7 @@
 
               var gifs = $(".images");
               var gifDisplay = $("<img>");
-              var ratingDisplay = $('<p>' + 'rating: ' + response.data[i].rating + '</p>');
+              var ratingDisplay = $('<p>' + 'rated: ' + response.data[i].rating + '</p>');
               gifDisplay.attr("src", response.data[i].images.fixed_height_still.url);
               gifDisplay.attr("data-still", response.data[i].images.fixed_height_still.url);
               gifDisplay.attr("data-animate", response.data[i].images.fixed_height.url);

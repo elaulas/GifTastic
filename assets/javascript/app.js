@@ -30,7 +30,7 @@ $(document).ready(function() {
             var gifs = $(".images");
             var gifDisplay = $("<img>");
             var ratingDisplay = $(
-              "<p>" + "rating: " + response.data[i].rating + "</p>"
+              "<p>" + "rated: " + response.data[i].rating + "</p>"
             );
             gifDisplay.attr(
               "src",

@@ -1,14 +1,41 @@
+body {
+    background-image: url('../images/basketball.png');
 
-
+}
 .images {
     text-align: center;
     display: inline-block;
-    
-
+    float: left;
+    width: 30%;
+    clear: both;
+    color: white;
 }
 
 img {
     margin: 5px;
+    clear: both;
     display: inline-block;
     /* width: 300px; */
-} 
+}
+
+button {
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+.btnSubmit {
+    margin: 0;
+    background-color: navy;
+    color: white;
+}
+
+.btnSubmit:hover {
+    background-color: white;
+    color: navy;
+}
+
+#nbaLogo {
+    height: 150px;
+    float: left;
+    margin-left: 25px;
+}
